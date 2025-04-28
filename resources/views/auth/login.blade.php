@@ -100,7 +100,7 @@
         <script>
             Swal.fire({
                 title: "Sukses",
-                text: "{{ $message }}",
+                text: "{{ session('success') }}",
                 icon: "success"
             });     
         </script>
