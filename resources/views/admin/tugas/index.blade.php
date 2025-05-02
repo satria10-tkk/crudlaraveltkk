@@ -16,11 +16,11 @@
                 </a>
             </div>
             <div>
-                <a href="{{ route('userExcel') }}" class="btn btn-sm btn-success">
+                <a href="{{ route('tugasExcel') }}" class="btn btn-sm btn-success">
                     <i class="fas fa-file-excel mr-2"></i>
                     Excel
                 </a>
-                <a href="{{ route('userPdf') }}" class="btn btn-sm btn-danger" target='__blank'>
+                <a href="{{ route('tugasPdf') }}" class="btn btn-sm btn-danger" target='__blank'>
                     <i class="fas fa-file-excel mr-2"></i>
                     PDF
                 </a>

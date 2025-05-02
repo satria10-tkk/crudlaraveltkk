@@ -4,17 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Tugas;
+use App\Exports\TugasExport;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TugasController extends Controller
 {
     public function index(){
-        $data = array(
-            'title'             => 'Data Tugas',
-            'menuAdminTugas'    => 'active',
-            'tugas'             => Tugas::with('user')->get(),
-        );
-        return view('admin/tugas/index',$data);
+        $user = Auth::user();
+
+        if ($user->jabatan=='Admin') {
+            $data = array(
+                'title'             => 'Data Tugas',
+                'menuAdminTugas'    => 'active',
+                'tugas'             => Tugas::with('user')->get(),
+            );
+            return view('admin/tugas/index',$data);
+        }else{
+            $data = array(
+                'title'             => 'Data Tugas',
+                'menuKaryawanTugas' => 'active',
+            );
+            return view('karyawan/tugas/index',$data);
+        }
     }
 
     public function create(){
@@ -91,6 +105,24 @@ class TugasController extends Controller
         $user->save();
 
         return redirect()->route('tugas')->with('success','Data Berhasil Di Hapus');
+    }
+
+    public function excel(){
+        $filename = now()->format('d-m-y_H.i.s');
+        return Excel::download(new TugasExport, 'DataTugas_'.$filename.'.xlsx');
+    }
+
+    public function pdf(){
+        $filename = now()->format('d-m-y_H.i.s');
+        $data = array(
+            'tugas'     => Tugas::with('user')->get(),
+            'tanggal'   => now()->format('d-m-y'),
+            'jam'       => now()->format('H.i.s'),
+        );
+        
+        $pdf = Pdf::loadView('admin/tugas/pdf', $data);
+        return $pdf->setPaper('a4', 'landscape')->download
+        ('DataTugas_'.$filename.'.pdf');
     }
 
 }
