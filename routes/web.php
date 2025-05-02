@@ -22,6 +22,8 @@ Route::middleware('checkLogin')->group(function(){
     //dashboard
     Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
     Route::get('tugas',[TugasController::class,'index'])->name('tugas');
+    Route::get('tugas/pdf',[TugasController::class,'pdf'])->name('tugasPdf');
+    
     Route::middleware('isAdmin')->group(function(){
     
         //user
@@ -40,6 +42,5 @@ Route::middleware('checkLogin')->group(function(){
         Route::post('tugas/update/{id}',[TugasController::class,'update'])->name('tugasUpdate');
         Route::delete('tugas/destroy/{id}',[TugasController::class,'destroy'])->name('tugasDestroy');
         Route::get('tugas/excel',[TugasController::class,'excel'])->name('tugasExcel');
-        Route::get('tugas/pdf',[TugasController::class,'pdf'])->name('tugasPdf');
     });
 });
