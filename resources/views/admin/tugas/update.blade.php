@@ -36,8 +36,7 @@
                             Tugas:
                         </label>
                         <textarea name="tugas" rows="5" 
-                        class="form-control @error('tugas') is-invalid @enderror">
-                        {{ $tugas->tugas }}</textarea>
+                        class="form-control @error('tugas') is-invalid @enderror">{{ $tugas->tugas }}</textarea>
                         @error('tugas')
                             <small class="text-danger">
                                 {{ $message }}
